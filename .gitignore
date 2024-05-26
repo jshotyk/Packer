@@ -1,0 +1,3 @@
+# Игнорируем папки Ubuntu Server Jammy Docker и Ubuntu Server Focal
+ubuntu-server-jammy-docker/
+ubuntu-server-focal/

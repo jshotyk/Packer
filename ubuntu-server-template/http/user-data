@@ -1,0 +1,32 @@
+#cloud-config
+# Файл конфигурации для автоматической установки Ubuntu / Configuration file for Ubuntu autoinstall
+
+autoinstall:
+  version: 1  # Версия autoinstall / Autoinstall version
+  locale: en_US  # Локаль системы / System locale
+  keyboard:
+    layout: us  # Раскладка клавиатуры / Keyboard layout
+  ssh:
+    install-server: true  # Установить SSH сервер / Install SSH server
+    allow-pw: true  # Разрешить вход по паролю / Allow password login
+    disable_root: true  # Отключить доступ root / Disable root access
+    ssh_quiet_keygen: true  # Тихая генерация SSH ключей / Quiet SSH key generation
+    allow_public_ssh_keys: true  # Разрешить публичные SSH ключи / Allow public SSH keys
+  packages:
+    - qemu-guest-agent  # Пакет qemu-guest-agent / qemu-guest-agent package
+    - sudo  # Пакет sudo / sudo package
+  storage:
+    layout:
+      name: direct  # Прямое разбиение диска / Direct disk layout
+    swap:
+      size: 0  # Размер swap (0 - отключить) / Swap size (0 - disable)
+  user-data:
+    package_upgrade: false  # Отключить обновление пакетов при установке / Disable package upgrade during install
+    timezone: America/Chicago  # Часовой пояс системы / System timezone
+    users:
+      - name: ansible  # Имя пользователя / Username
+        passwd: "$6$rounds=656000$GQp7E1xJ6ikyHfuT$ncTaEW7i1Dy/AbbHp5aQlfFMxL9.YIaHizePwIMZH/MWlxoqmZ.F.zww0zKcYK6dp2QhV6x0HaX9zu/MZw1sM1"  # Хэш пароля / Password hash
+        groups: [adm, sudo]  # Группы, в которые входит пользователь / Groups the user belongs to
+        lock-passwd: false  # Не блокировать пароль / Do not lock password
+        sudo: ALL=(ALL) NOPASSWD:ALL  # Права sudo для пользователя / Sudo rights for the user
+        shell: /bin/bash  # Оболочка по умолчанию / Default shell
