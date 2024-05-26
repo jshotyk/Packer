@@ -22,7 +22,7 @@ autoinstall:
       size: 0  # Размер swap (0 - отключить) / Swap size (0 - disable)
   user-data:
     package_upgrade: false  # Отключить обновление пакетов при установке / Disable package upgrade during install
-    timezone: America/Chicago  # Часовой пояс системы / System timezone
+    timezone: Europe/Moscow # Часовой пояс системы / System timezone
     users:
       - name: ansible  # Имя пользователя / Username
         passwd: "$6$rounds=656000$GQp7E1xJ6ikyHfuT$ncTaEW7i1Dy/AbbHp5aQlfFMxL9.YIaHizePwIMZH/MWlxoqmZ.F.zww0zKcYK6dp2QhV6x0HaX9zu/MZw1sM1"  # Хэш пароля / Password hash

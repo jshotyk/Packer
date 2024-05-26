@@ -14,8 +14,19 @@ packer {
     }
   }
 }
+variable "proxmox_api_url" {
+    type = string
+}
 
-source "proxmox-iso" "ubuntu-server-noble-numbat" {
+variable "proxmox_api_token_id" {
+    type = string
+}
+
+variable "proxmox_api_token_secret" {
+    type = string
+    sensitive = true
+}
+source "proxmox-iso" "ubuntu-server-noble" {
     # Настройки подключения к Proxmox
     # Proxmox Connection Settings
     proxmox_url = "${var.proxmox_api_url}"  # URL для подключения к Proxmox / URL to connect to Proxmox
@@ -29,15 +40,15 @@ source "proxmox-iso" "ubuntu-server-noble-numbat" {
     # Общие настройки виртуальной машины
     # VM General Settings
     node = "server"  # Узел Proxmox для создания VM / Proxmox node for VM creation
-    vm_id = "300"  # Идентификатор виртуальной машины / Virtual machine ID
-    vm_name = "ubuntu-server-noble-numbat"  # Имя виртуальной машины / Virtual machine name
+    vm_id = "301"  # Идентификатор виртуальной машины / Virtual machine ID
+    vm_name = "ubuntu-server-noble"  # Имя виртуальной машины / Virtual machine name
     template_description = "Noble Numbat"  # Описание шаблона / Template description
 
     # Настройки ОС виртуальной машины
     # VM OS Settings
-    #iso_url = "https://releases.ubuntu.com/24.04/ubuntu-24.04-live-server-amd64.iso"
-    #iso_checksum = "sha256:8762f7e74e4d64d72fceb5f70682e6b069932deedb4949c6975d0f0fe0a91be"
-    iso_file = "local:iso/ubuntu-24.04-live-server-amd64.iso"  # Путь к ISO файлу / Path to the ISO file
+    iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04-live-server-amd64.iso"
+    iso_checksum = "sha256:8762f7e74e4d64d72fceb5f70682e6b069932deedb4949c6975d0f0fe0a91be3"
+    #iso_file = "local:iso/ubuntu-24.04-live-server-amd64.iso"  # Путь к ISO файлу / Path to the ISO file
     iso_storage_pool = "local"  # Пул хранения ISO / ISO storage pool
     unmount_iso = true  # Автоматическое размонтирование ISO после установки / Automatically unmount ISO after installation
     template_name = "packer-ubuntu2404"  # Имя шаблона / Template name
@@ -53,7 +64,7 @@ source "proxmox-iso" "ubuntu-server-noble-numbat" {
     disks {
         disk_size = "20G"  # Размер диска / Disk size
         format = "raw"  # Формат диска / Disk format
-        storage_pool = "local-lvm"  # Пул хранения диска / Disk storage pool
+        storage_pool = "lvm2"  # Пул хранения диска / Disk storage pool
         type = "virtio"  # Тип диска / Disk type
     }
 
@@ -76,7 +87,7 @@ source "proxmox-iso" "ubuntu-server-noble-numbat" {
     # Настройки Cloud-Init для виртуальной машины
     # VM Cloud-Init Settings
     cloud_init = true  # Включить Cloud-Init / Enable Cloud-Init
-    cloud_init_storage_pool = "local-lvm"  # Пул хранения для Cloud-Init / Cloud-Init storage pool
+    cloud_init_storage_pool = "lvm2"  # Пул хранения для Cloud-Init / Cloud-Init storage pool
 
     # Команды загрузки для PACKER
     # PACKER Boot Commands
@@ -119,8 +130,8 @@ source "proxmox-iso" "ubuntu-server-noble-numbat" {
 # Определение сборки для создания шаблона виртуальной машины
 # Build Definition to create the VM Template
 build {
-    name = "ubuntu-server-noble-numbat"  # Имя сборки / Build name
-    sources = ["proxmox-iso.ubuntu-server-noble-numbat"]  # Источники для сборки / Build sources
+    name = "ubuntu-server-noble"  # Имя сборки / Build name
+    sources = ["proxmox-iso.ubuntu-server-noble"]  # Источники для сборки / Build sources
 
     # Настройка шаблона виртуальной машины для интеграции Cloud-Init в Proxmox #1
     # Provisioning the VM Template for Cloud-Init Integration in Proxmox #1
