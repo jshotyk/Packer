@@ -26,7 +26,9 @@ autoinstall:
     users:
       - name: ansible  # Имя пользователя / Username
         passwd: "$6$rounds=656000$GQp7E1xJ6ikyHfuT$ncTaEW7i1Dy/AbbHp5aQlfFMxL9.YIaHizePwIMZH/MWlxoqmZ.F.zww0zKcYK6dp2QhV6x0HaX9zu/MZw1sM1"  # Хэш пароля / Password hash
+        ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC37AsdrrDVHwEnrdq6hHul9330DMRa27Ckxv+raNp9OYrnk2KFSyu5aQspPViFez9ctOpwUh/AK5vabBnUtxxmWF2fMk+kTyvwQk+yM2Gvmy5QIewPEctBh2trIz7OYvWWyhQ3CEE9Y03L1MWevt0kGCkt2NCZft/o8bZ65grXN64u7qHc9rnJwIf2EXX8xJusprex7c2BJ9/YhWt2MboWyTPW4wCZhW2UrJ0vIXExNCUGXqr98z4w4vJbsOlRKIqgY8BYVuk6IFVfzZ2LH6WipYNUBRj/wWKcwEL70b8oWxzY62XBqqz/vO51eqB67rbR/kbH27KvK0U7uUR7kjSk720Y/4NSs2FaLcKWTR7aWfSavcCF5FtGk7vb5G9mjMKQ3B9Ncg4/NBrlGSvsrG/+F0ZibkwS+HsM8EJ79DqXzHWhzobn1rBOJB3D+vLV/h+C7pJO6I1Gi+2VrQ8ER9JtoqStD3zIEC2ruXBbu4jKz9mncGP3i04N1eyF8+NL35c= cmerc@DESKTOP-OIV4FGB
         groups: [adm, sudo]  # Группы, в которые входит пользователь / Groups the user belongs to
         lock-passwd: false  # Не блокировать пароль / Do not lock password
         sudo: ALL=(ALL) NOPASSWD:ALL  # Права sudo для пользователя / Sudo rights for the user
-        shell: /bin/bash  # Оболочка по умолчанию / Default shell
+        shell: /bin/bash  # Оболочка по умолчанию / Default shell    

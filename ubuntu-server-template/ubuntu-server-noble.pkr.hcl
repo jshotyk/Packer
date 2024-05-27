@@ -115,12 +115,12 @@ source "proxmox-iso" "ubuntu-server-noble" {
 
     # (Вариант 1) Добавьте ваш пароль здесь
     # (Option 1) Add your Password here
-    ssh_password = "4658dsaf**"  # Пароль для SSH / SSH password
+    #ssh_password = "your_password"  # Пароль для SSH / SSH password
     # - или -
     # - or -
     # (Вариант 2) Добавьте ваш приватный SSH ключ здесь
     # (Option 2) Add your Private SSH KEY file here
-    # ssh_private_key_file = "~/.ssh/id_rsa"  # Путь к приватному ключу SSH / Path to the private SSH key
+    ssh_private_key_file = "~/.ssh/id_rsa"  # Путь к приватному ключу SSH / Path to the private SSH key
 
     # Увеличьте таймаут, если установка занимает больше времени
     # Raise the timeout if the installation takes longer
@@ -139,6 +139,7 @@ build {
         inline = [
             "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done",  # Ждать завершения cloud-init / Wait for cloud-init to finish
             "sudo rm /etc/ssh/ssh_host_*",  # Удалить SSH ключи / Remove SSH keys
+            "sudo ssh-keygen -A",  # Генерация SSH ключей после удаления старых / Generate SSH keys after removing old ones
             "sudo truncate -s 0 /etc/machine-id",  # Очистить идентификатор машины / Clear machine ID
             "sudo apt -y autoremove --purge",  # Удалить неиспользуемые пакеты / Remove unused packages
             "sudo apt -y clean",  # Очистить кэш APT / Clean APT cache
@@ -161,5 +162,9 @@ build {
     # Provisioning the VM Template for Cloud-Init Integration in Proxmox #3
     provisioner "shell" {
         inline = [ "sudo cp /tmp/99-pve.cfg /etc/cloud/cloud.cfg.d/99-pve.cfg" ]  # Копировать файл конфигурации на место / Copy configuration file to the destination
+    }
+
+    provisioner "shell" {
+        inline = [ "sudo apt install ansible -y"]  # Установка ansible / Install ansible
     }
 }
